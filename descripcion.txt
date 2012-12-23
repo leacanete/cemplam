@@ -1,0 +1,94 @@
+/* WTF */
+
+Do I need to compare users from previous table(s)?
+
+I will make a new users' table everyday so it will miss new user consulta if wrong loaded to the original table.
+
+I need it finished by December, 26 or earlier...
+
+How will it update user data? I will program a SQL sentence so it does it everytime the table was updated
+
+What's the idea?
+
+Doctors need to see their consultas
+Only see?
+Won't do any changes?
+I need to fetch data from consultas to a new table everyday. That would be GORGEUS. It would save up a lot of time and effort in the code.
+
+What else?
+
+Let's start making definitions:
+
+	I'll have the table loaded, as is. No guarantees of being consistent.
+	I need to program several SQL sentences to:
+		1)	Filter data and load a users table.
+		2)	That table will have to maintain previous users' data.
+		3)	I want to fetch up data and load it on a new table, to better organise the information.
+			a)	I need to take the consultas table and load rows grouped by matricula and nombre.
+			b)	I need to put that information on a new table, having previously compared it to the existent user data. If user exists, just leave it there. If user doesn't exist, well, will be created with default login, username and a default password.
+			c)	Shall I <desglosar> consultas data into estudios, pacientes and a new table? I'm gonna need a few more programmed SQL sentences to earn nothing else but a better structured information table. What's the benefit on doing that?
+			d)	What's the data I need from doctors?
+				-	I need their names.
+				-	I need their new password.
+				-	I need their boolean flag to check if they've changed the default password.
+				-	I need their username of course.
+				-	I need their matricula, but dunno what for. I'll put it in the table just for fun and possible future use.
+
+				-	This data will be the session handler properties fetched from the new table created and updated everytime it loads the updated consultas table from MS SQL Server.
+
+			*	So...
+			*	I need to declare the following session properties:
+			*		-	ID (integer AUTO_INCREMENT PRIMARY KEY)
+			*		-	Matricula (integer)
+			*		-	Nombre completo (string NOT NULL)
+			*		-	Nombre de usuario (string NOT NULL)
+			*		-	Contraseña (string NOT NULL DEFAULT '12345')
+			*		-	Cambio de contraseña (boolean default FALSE)
+			*		-	Will see if I'm in need of other vars in the close future...
+			*	
+			*	Then I need the functions:
+			*	<i>Well, here I can see why do I need to remake the fucking table.
+			*	I need to uniquely identify doctors by matricula and nombre, so to downgrade SQL sentences complexity I'm in need of making
+			*	a new table with data and just one campo to identify doctors, so I can make a simple SQL sentence with doctor ID.   :D </i>
+			*	I need to fetch the data from THE NEW consultas table created with doctor ID.
+			*	I need to build the HTML code in the very function so it saves up some code.
+			*	
+			*	GOD I HATE HTML STYLING
+			*	
+			*	sesion.build
+			*		It will create session on login if login OK.
+			*	
+			*	sesion.destroy
+			*		It will be called on user logout.
+			*	
+			*	sesion.getdata
+			*		It will load the consultas for each doctor and return(); the constructed HTML code for the table in the body tag.
+			*	
+			*	// The doctors must be able to download an excel spreadsheet. That can be done with some code I used in preevaluativos.
+			*	
+			*	//We have a problem. "Si te fijas la primera columna tiene un numero de registro. Esas son las consultas, si el numero de 
+			*	registro que suben es igual a uno que ya esta en la base de datos, tiene que sobreescribir la linea."
+			*	
+			*	Some news: I thought it couldn't load the ConCodi (Codigo de consulta) when exporting via internet, I thought that number
+			*	was lost when exporting, but no, it's OK now.
+			*	
+			*	
+
+/* Clase sesion */
+
+what you need?
+
+I need definitions about properties
+I need functions like create destroy and flushdata to save up resources and speed up management
+
+What properties do I need?
+
+I need
+
+User data:
+
+matricula
+nombre y apellido
+usuario
+contraseña
+
